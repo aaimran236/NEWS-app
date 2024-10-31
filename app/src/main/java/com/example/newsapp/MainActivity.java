@@ -5,6 +5,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsapp.adapters.GridCategoryAdapter;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private GridView gridView;
     private GridCategoryAdapter adapter;
 
+    ///we will load real news from our custom website
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
         gridView=findViewById(R.id.grid_view);
         adapter=new GridCategoryAdapter(this.gridView.getContext());
         gridView.setAdapter(adapter);
+
+        recyclerView=findViewById(R.id.rec_news);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
     }
 
     private void addToSliderRecycler() {

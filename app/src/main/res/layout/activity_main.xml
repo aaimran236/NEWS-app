@@ -61,8 +61,6 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
-                <include layout="@layout/item_news_image"/>
-                <include layout="@layout/item_news"/>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
