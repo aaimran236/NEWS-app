@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.NEWSApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimaryDark">#09655C</item>
+    </style>
+
+    <style name="Theme.NEWSApp" parent="Base.Theme.NEWSApp" />
+</resources>
