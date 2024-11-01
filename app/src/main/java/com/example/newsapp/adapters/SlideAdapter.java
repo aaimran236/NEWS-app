@@ -35,7 +35,9 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(context).load(arrayList.get(position)).into(holder.imageView);
-        holder.itemView.setOnClickListener(view -> onItemClickListener.onClick(holder.imageView,arrayList.get(position)));
+        holder.itemView.setOnClickListener(view -> {
+            onItemClickListener.onClick(holder.imageView, arrayList.get(position));
+        });
     }
 
     @Override
