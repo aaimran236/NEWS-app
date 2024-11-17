@@ -1,6 +1,7 @@
 package com.example.newsapp.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.newsapp.R;
+import com.example.newsapp.model.HomePageModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,30 +20,22 @@ public class GridCategoryAdapter extends BaseAdapter {
 
     LayoutInflater layoutInflater;
     Context context;
-    List<DemoCategories> demoCategories;
+    List<HomePageModel.CategoryBotton> categoryBottons;
 
-    public GridCategoryAdapter(Context context){
+    public GridCategoryAdapter(Context context,List<HomePageModel.CategoryBotton> categoryBottons){
         this.context=context;
         layoutInflater=(LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        demoCategories=new ArrayList<>();
+        this.categoryBottons=categoryBottons;
 
-        demoCategories.add(new DemoCategories(R.drawable.icn1, "Basics"));
-        demoCategories.add(new DemoCategories(R.drawable.icn2, "Logic"));
-        demoCategories.add(new DemoCategories(R.drawable.icn3, "Android"));
-        demoCategories.add(new DemoCategories(R.drawable.icn4, "Binary"));
-        demoCategories.add(new DemoCategories(R.drawable.icn5, "Components"));
-        demoCategories.add(new DemoCategories(R.drawable.icn6, "Java"));
-        demoCategories.add(new DemoCategories(R.drawable.icn7, "HTML"));
-        demoCategories.add(new DemoCategories(R.drawable.icn8, "Database"));
     }
     @Override
     public int getCount() {
-        return demoCategories.size();
+        return categoryBottons.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return demoCategories.get(i);
+        return categoryBottons.get(i);
     }
 
     @Override
@@ -62,8 +56,12 @@ public class GridCategoryAdapter extends BaseAdapter {
         }else {
             holder=(GridViewHolder) view.getTag();
         }
-        holder.textView.setText(demoCategories.get(i).imageName);
-        Glide.with(context).load(demoCategories.get(i).imageId).into(holder.circularImage);
+        holder.textView.setText(categoryBottons.get(i).getName());
+        Glide.with(context).load(categoryBottons.get(i).getImage()).into(holder.circularImage);
+
+        if (categoryBottons.get(i).getColor()!=null){
+            holder.circularImage.setBackgroundColor(Color.parseColor(categoryBottons.get(i).getColor()));
+        }
 
         return view;
     }
@@ -73,13 +71,4 @@ public class GridCategoryAdapter extends BaseAdapter {
         TextView textView;
     }
 
-    static class DemoCategories {
-        int imageId;
-        String imageName;
-
-        public DemoCategories(int imageId, String imageName) {
-            this.imageId = imageId;
-            this.imageName = imageName;
-        }
-    }
 }

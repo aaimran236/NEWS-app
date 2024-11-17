@@ -1,10 +1,15 @@
 package com.example.newsapp;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.NestedScrollingChild;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +40,17 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
     private List<HomePageModel.News> news;
+    private List<HomePageModel.CategoryBotton> categoryBottons;
+
+    ///Variable for infinite news feeds
+    private int posts=3;
+    private int page=1;
+    private boolean isFromStart=true;
+
+    ///Progress bar
+    ProgressBar progressBar;
+
+    private NestedScrollView nestedScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +58,38 @@ public class MainActivity extends AppCompatActivity {
        /// EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        MaterialToolbar toolbar=findViewById(R.id.toolBar);
-        setSupportActionBar(toolbar);
+//        MaterialToolbar toolbar=findViewById(R.id.toolBar);
+//        setSupportActionBar(toolbar);
 
         initiateViews();
         ///addToSliderRecycler();
 
+        ///Initial Condition
+        page=1;
+        isFromStart=true;
+
         ///Getting data
         getHomeData();
+
+        ///Getting new data on scrolling and swiping down
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(@NonNull NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY== (v.getChildAt(0).getMeasuredHeight()-v.getMeasuredHeight())){
+                    isFromStart=false;
+                    progressBar.setVisibility(View.VISIBLE);
+                    page++;
+                    getHomeData();
+                }
+            }
+        });
     }
 
     private void getHomeData() {
         ApiInterface apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
         Map<String,String> params=new HashMap<>();
-        params.put("page",1+"");
-        params.put("posts",10+"");
+        params.put("page",page+"");
+        params.put("posts",posts+"");
 
         Call<HomePageModel> call=apiInterface.getHomePageApi(params);
 
@@ -75,6 +108,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateDataOnHomePage(HomePageModel body) {
 
+        progressBar.setVisibility(View.GONE);
+        if (isFromStart){
+            categoryBottons.clear();
+        }
+
         for(int i=0;i<body.getBanners().size();i++){
             images.add(body.getBanners().get(i).getImage());
         }
@@ -88,23 +126,43 @@ public class MainActivity extends AppCompatActivity {
         });
         sliderRecycler.setAdapter(slideAdapter);
 
+        int beforeNewsSize=news.size();
 
         for (int i=0;i<body.getNews().size();i++){
             news.add(body.getNews().get(i));
         }
-        recyclerView.setAdapter(newsAdapter);
+
+        categoryBottons.addAll(body.getCategoryBotton());
+
+        if (isFromStart){
+            recyclerView.setAdapter(newsAdapter);
+            gridView.setAdapter(adapter);
+        }else{
+            newsAdapter.notifyItemRangeChanged(beforeNewsSize,body.getNews().size());
+        }
+
+
+
+
     }
 
     private void initiateViews() {
+        categoryBottons=new ArrayList<>();
         sliderRecycler=findViewById(R.id.slider_recycler);
         gridView=findViewById(R.id.grid_view);
-        adapter=new GridCategoryAdapter(this.gridView.getContext());
-        gridView.setAdapter(adapter);
+        adapter=new GridCategoryAdapter(this,categoryBottons);
 
+        ///Progressbar
+        progressBar=findViewById(R.id.progressBar);
+
+        ///ScrollView
+        nestedScrollView=findViewById(R.id.nested_scrollView);
+
+        ///Initialize recyclerview
         recyclerView=findViewById(R.id.rec_news);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setHasFixedSize(true);
+        ///recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
 
         news=new ArrayList<>();
