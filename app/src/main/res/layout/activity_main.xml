@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:layout_marginTop="0dp"
    >
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -27,13 +26,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
-
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="10dp"
                     android:id="@+id/slider_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="8dp"
                     android:orientation="horizontal"
                     app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager" />

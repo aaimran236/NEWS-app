@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.NewsDetailActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6200EE" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <ProgressBar
+            android:id="@+id/progressBarNews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:indeterminateTint="@color/blue" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progressBarNews">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/wrapper_cardview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/wrapper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/icon_youtube" />
+
+                            <TextView
+                                android:id="@+id/source_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:paddingStart="16dp"
+                                android:paddingLeft="16dp"
+                                android:text="App Name"
+
+                                />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/news_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/wrapper"
+                            android:paddingStart="16dp"
+                            android:paddingLeft="16dp"
+                            android:text="News Title"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:id="@+id/wrapper_news"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/news_title"
+                            android:layout_marginTop="4dp"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:id="@+id/news_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:paddingRight="5dp"
+                                android:text="Date" />
+
+
+                            <TextView
+                                android:id="@+id/news_views"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/news_date"
+                                android:layout_toRightOf="@id/news_date"
+                                android:gravity="end"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:paddingRight="5dp"
+                                android:text="100 Views" />
+
+
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:id="@+id/news_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/wrapper_news"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/icon_youtube" />
+
+                        <TextView
+                            android:id="@+id/news_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/news_image"
+                            android:lineSpacingMultiplier="10"
+                            android:padding="10dp"
+                            android:text="News Desc"
+                            android:textSize="17sp" />
+
+                        <Button
+                            android:id="@+id/view_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/news_desc"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:text="View More" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/lebel_similar_news"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wrapper_cardview"
+                    android:padding="10dp"
+                    android:text="Similar News"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/news_recyler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lebel_similar_news" />
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

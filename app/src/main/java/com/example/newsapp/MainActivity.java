@@ -1,5 +1,6 @@
 package com.example.newsapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
@@ -12,6 +13,7 @@ import androidx.core.view.NestedScrollingChild;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.newsapp.adapters.GridCategoryAdapter;
 import com.example.newsapp.adapters.NewsAdapter;
@@ -44,13 +46,15 @@ public class MainActivity extends AppCompatActivity {
 
     ///Variable for infinite news feeds
     private int posts=3;
-    private int page=1;
+    private static int page=1;
     private boolean isFromStart=true;
 
     ///Progress bar
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
 
     private NestedScrollView nestedScrollView;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,15 +105,19 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<HomePageModel> call, Throwable throwable) {
-
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
     private void updateDataOnHomePage(HomePageModel body) {
-
         progressBar.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
+
         if (isFromStart){
+            images.clear();
+            news.clear();
             categoryBottons.clear();
         }
 
@@ -146,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ResourceAsColor")
     private void initiateViews() {
         categoryBottons=new ArrayList<>();
         sliderRecycler=findViewById(R.id.slider_recycler);
@@ -167,6 +176,18 @@ public class MainActivity extends AppCompatActivity {
 
         news=new ArrayList<>();
         newsAdapter=new NewsAdapter(this,news);
+
+        swipeRefreshLayout=findViewById(R.id.swipy);
+        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setColorSchemeResources(R.color.orange,R.color.blue,R.color.green);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                isFromStart=true;
+                page=1;
+                getHomeData();
+            }
+        });
     }
 
     private void addToSliderRecycler() {
