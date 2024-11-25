@@ -1,6 +1,7 @@
 package com.example.newsapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.newsapp.R;
+import com.example.newsapp.activities.NewsDetailActivity;
 import com.example.newsapp.model.HomePageModel;
 
 import java.util.List;
@@ -78,7 +80,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return news.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         View holder;
         ImageView newsImage;
         TextView newsTitle, newsDesc, newsDate, newsSource, newsViews;
@@ -92,6 +94,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             newsDate = holder.findViewById(R.id.news_date);
             newsSource = holder.findViewById(R.id.news_source);
             newsViews = holder.findViewById(R.id.news_views);
+
+            holder.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent i=new Intent(context, NewsDetailActivity.class);
+            i.putExtra("pid",news.get(getAdapterPosition()).getPid());
+            context.startActivity(i);
         }
     }
 

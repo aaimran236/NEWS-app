@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#6200EE" />
+        android:background="#0d7a70" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,11 +24,14 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
+            android:visibility="gone"
             android:indeterminateTint="@color/blue" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:overScrollMode="never"
             android:layout_below="@id/progressBarNews">
 
             <RelativeLayout
@@ -51,6 +54,7 @@
                             android:layout_height="wrap_content">
 
                             <ImageView
+                                android:id="@+id/small_logo"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center"
@@ -101,7 +105,7 @@
 
 
                             <TextView
-                                android:id="@+id/news_views"
+                                android:id="@+id/news_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@id/news_date"
@@ -128,7 +132,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/news_image"
-                            android:lineSpacingMultiplier="10"
                             android:padding="10dp"
                             android:text="News Desc"
                             android:textSize="17sp" />
@@ -149,7 +152,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/lebel_similar_news"
+                    android:id="@+id/label_similar_news"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/wrapper_cardview"
@@ -162,7 +165,7 @@
                     android:id="@+id/news_recyler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/lebel_similar_news" />
+                    android:layout_below="@id/label_similar_news" />
 
             </RelativeLayout>
 
