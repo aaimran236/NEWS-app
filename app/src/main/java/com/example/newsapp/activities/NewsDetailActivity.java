@@ -1,5 +1,6 @@
 package com.example.newsapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.newsapp.R;
+import com.example.newsapp.adapters.NewsAdapter;
 import com.example.newsapp.model.HomePageModel;
 import com.example.newsapp.rest.ApiClient;
 import com.example.newsapp.rest.ApiInterface;
@@ -42,6 +44,8 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     private ImageView image,small_icon;
 
+    private HomePageModel.News detailNews;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,20 +67,21 @@ public class NewsDetailActivity extends AppCompatActivity {
     private void loadNewsDetails() {
         ApiInterface apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
         Map<String,String> params=new HashMap<>();
+        params.put("id",getIntent().getIntExtra("pid",0)+"");
 
 
-        Call<HomePageModel> call=apiInterface.getHomePageApi(params);
+        Call<HomePageModel> call=apiInterface.getNewsDetailsById(params);
 
         call.enqueue(new Callback<HomePageModel>() {
             @Override
             public void onResponse(Call<HomePageModel> call, Response<HomePageModel> response) {
 
                 ///Updating the news layout
-                HomePageModel.News detailNews=response.body().getNews().get(0);
+                 detailNews=response.body().getNews().get(0);
                 newsTitle.setText(detailNews.getTitle());
-                newsDesc.setText(detailNews.getPostContent());
+                newsDesc.setText(NewsAdapter.removeHtml(detailNews.getPostContent()).trim());
 
-                if (detailNews.getImage().length()>1){
+                if (detailNews.getImage().length()>=1){
                     Glide.with(NewsDetailActivity.this)
                             .load(detailNews.getImage())
                             .into(image);
@@ -85,9 +90,11 @@ public class NewsDetailActivity extends AppCompatActivity {
                 }
 
                 sourceName.setText(detailNews.getSource());
-                if (detailNews.getSourceLogo()!=null){
+                if (detailNews.getSourceLogo().getIcon().length()>=1){
+                    String url=detailNews.getSourceLogo().getIcon();
+                    String iconUrl=url.replace("localhost","10.0.2.2");
                     Glide.with(NewsDetailActivity.this)
-                            .load(detailNews.getSourceLogo())
+                            .load(iconUrl)
                             .into(small_icon);
                 }
 
@@ -151,7 +158,16 @@ public class NewsDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId()==R.id.share){
-            Toast.makeText(this, "News share icon is clicked", Toast.LENGTH_SHORT).show();
+            if (detailNews!=null){
+                Intent intent=new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT,NewsAdapter.removeHtml(detailNews.getTitle()));
+                intent.putExtra(Intent.EXTRA_TEXT,NewsAdapter.removeHtml(detailNews.getPostContent()));
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(this, "Sorry", Toast.LENGTH_SHORT).show();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
