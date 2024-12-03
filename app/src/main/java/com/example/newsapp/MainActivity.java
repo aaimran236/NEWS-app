@@ -1,6 +1,7 @@
 package com.example.newsapp;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.newsapp.activities.YoutubeActivity;
 import com.example.newsapp.adapters.GridCategoryAdapter;
 import com.example.newsapp.adapters.NewsAdapter;
 import com.example.newsapp.adapters.SlideAdapter;
@@ -22,6 +24,7 @@ import com.example.newsapp.model.HomePageModel;
 import com.example.newsapp.rest.ApiClient;
 import com.example.newsapp.rest.ApiInterface;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     private NestedScrollView nestedScrollView;
 
     private SwipeRefreshLayout swipeRefreshLayout;
+
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,8 +161,19 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("ResourceAsColor")
     private void initiateViews() {
+        fab=findViewById(R.id.floatings);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this, YoutubeActivity.class);
+                startActivity(intent);
+            }
+        });
+
         categoryBottons=new ArrayList<>();
+
         sliderRecycler=findViewById(R.id.slider_recycler);
+
         gridView=findViewById(R.id.grid_view);
         adapter=new GridCategoryAdapter(this,categoryBottons);
 

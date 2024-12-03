@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="Youtube Video"
-            app:titleTextColor="@color/black"
+            app:titleTextColor="@color/white"
+            android:background="@color/green"
             app:layout_scrollFlags="scroll|enterAlways"
             app:layout_collapseMode='pin'
             />
@@ -29,8 +30,8 @@
             app:tabIndicatorColor="@color/white"
             app:layout_scrollFlags="scroll|enterAlways"
             app:tabMode="scrollable"
-            app:tabTextColor="@color/white"
-            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/blue"
+            app:tabSelectedTextColor="@color/green"
             />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -39,7 +40,7 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
     </androidx.viewpager.widget.ViewPager>
