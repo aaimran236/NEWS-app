@@ -1,26 +1,17 @@
 package com.example.newsapp.activities;
 
 import android.os.Bundle;
-
 import android.view.View;
 import android.widget.Toast;
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
-
 import com.example.newsapp.R;
 import com.example.newsapp.adapters.ViewPagerAdapter;
-import com.example.newsapp.model.HomePageModel;
 import com.example.newsapp.model.OurYtModel;
 import com.example.newsapp.rest.ApiClient;
 import com.example.newsapp.rest.ApiInterface;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,7 +47,7 @@ public class YoutubeActivity extends AppCompatActivity {
         ///toolbar
         // toolbar
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Youtube Videos");
+        getSupportActionBar().setTitle("YouTube Videos");
         toolbar.setNavigationIcon(R.drawable.icon_arrow_back_white);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

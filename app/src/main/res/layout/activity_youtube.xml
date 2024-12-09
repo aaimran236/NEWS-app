@@ -16,9 +16,9 @@
             android:id="@+id/toolbary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Youtube Video"
+            app:title="YouTube Videos"
             app:titleTextColor="@color/white"
-            android:background="@color/green"
+            android:background="#1C9084"
             app:layout_scrollFlags="scroll|enterAlways"
             app:layout_collapseMode='pin'
             />
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tab_layout"
             app:tabIndicatorColor="@color/white"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags="snap"
             app:tabMode="scrollable"
             app:tabTextColor="@color/blue"
             app:tabSelectedTextColor="@color/green"

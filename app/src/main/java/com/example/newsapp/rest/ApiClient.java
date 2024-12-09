@@ -15,7 +15,7 @@ public class ApiClient {
 
     ///insert laptop ip address after connecting the phone and laptop to the same Wi-Fi
     /// 192.168.x.x(insert your own api , run "ipconfig" in cmd) ip ,it keep changing everytime i connected with Wi-Fi
-    public static final String BASE_URL_REAL="http://192.168.0.102/newsapp/wp-json/api/";
+    public static final String BASE_URL_REAL="http://192.168.x.x/newsapp/wp-json/api/";
 
     private  static Retrofit retrofit=null;
 
